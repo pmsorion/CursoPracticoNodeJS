@@ -9,7 +9,8 @@
       "email" : "apiteam@swagger.io"
     }
   },
-  "host" : "http://localhost:3000/api",
+  "host" : "localhost:3000",
+  "basePath" : "/api",
   "tags" : [ {
     "name" : "user",
     "description" : "Operaciones y rutas sobre usuarios",
