@@ -17,6 +17,10 @@ const check = {
     own: (req, owner) => {
         const decoded = decodeHeader(req);
         console.log(decoded);
+
+        if (decoded.id !== owner) {
+            throw new Error('Accion no permitida');
+        }
     },
 }
 
@@ -31,7 +35,6 @@ function getToken(auth) {
     }
 
     let token = auth.replace('Bearer ', '');
-
     return token;
 }
 
@@ -47,4 +50,5 @@ function decodeHeader(req) {
 
 module.exports = {
     sign,
+    check,
 };
