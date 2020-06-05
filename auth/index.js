@@ -16,7 +16,6 @@ const check = {
     own: (req, owner) => {
         const decoded = decodeHeader(req);
         //console.log(decoded);
-
         if (decoded.id !== owner) {
             throw error('Accion no permitida', 401);
         }
@@ -26,11 +25,11 @@ const check = {
 function getToken(auth) {
     /// bearer
     if (!auth) {
-        throw new Error('No viene token');
+        throw error('No viene token', 401);
     }
 
     if (auth.indexOf('Bearer ') === -1) {
-        throw new Error('Formato invalido');
+        throw error('Formato invalido', 401);
     }
 
     let token = auth.replace('Bearer ', '');
