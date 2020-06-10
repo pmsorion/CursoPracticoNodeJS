@@ -3,17 +3,17 @@ const auth = require('../auth');
 
 const TABLA = 'user';
 
-module.exports = (injectedStore) => {
+module.exports = function (injectedStore) {
     let store = injectedStore;
     if (!store) {
         store = require('../../../store/dummy');
     }
 
-    function list () {
+    function list() {
         return store.list(TABLA);
     }
 
-    function get (id) {
+    function get(id) {
         return store.get(TABLA, id);
     }
 
@@ -30,7 +30,7 @@ module.exports = (injectedStore) => {
         }
 
         if (body.password || body.username) {
-            await auth.upsert ({
+            await auth.upsert({
                 id: user.id,
                 username: user.username,
                 password: body.password,
@@ -40,9 +40,17 @@ module.exports = (injectedStore) => {
         return store.upsert(TABLA, user);
     }
 
+    function follow(from, to) {
+        return store.upsert(TABLA + '_follow', {
+            user_from: from,
+            user_to: to,
+        });
+    }
+
     return {
         list,
         get,
         upsert,
+        follow,
     };
 }

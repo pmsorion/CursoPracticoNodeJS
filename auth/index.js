@@ -13,17 +13,21 @@ function verify(token) {
 }
 
 const check = {
-    own: (req, owner) => {
+    own: function(req, owner) {
         const decoded = decodeHeader(req);
-        //console.log(decoded);
+        console.log(decoded);
+
         if (decoded.id !== owner) {
-            throw error('Accion no permitida', 401);
+            throw error('No puedes hacer esto', 401);
         }
+    },
+
+    logged: function(req, owner) {
+        const decoded = decodeHeader(req);
     },
 }
 
 function getToken(auth) {
-    /// bearer
     if (!auth) {
         throw error('No viene token', 401);
     }
