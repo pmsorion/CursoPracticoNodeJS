@@ -49,14 +49,24 @@ function list(table) {
 
 function get(table, id) {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE id="${id}"`, (err, data) => {
-            if (err) {
-                return reject(err);
-            } else {
-                resolve(data);
-            }
-            
-        })
+        if (table === 'post') {
+            connection.query(`SELECT * FROM ${table} WHERE user="${id}"`, (err, data) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    resolve(data);
+                }
+            })
+        } else {
+            connection.query(`SELECT * FROM ${table} WHERE id="${id}"`, (err, data) => {
+                if (err) {
+                    return reject(err);
+                } else {
+                    resolve(data);
+                }
+            })
+        }
+
     })
 }
 
