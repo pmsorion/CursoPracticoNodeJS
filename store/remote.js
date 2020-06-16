@@ -1,17 +1,17 @@
 const request = require('request');
 
-function createRemoteDb(host, port) {
-    const URL = `http://${host}:${port}`;
+function createRemoteDB(host, port) {
+    const URL = 'http://'+ host + ':' + port;
 
     function list(table) {
-        return req('GET', table)
+        return req('GET', table);
     }
 
-    function get(table, id) {
-        return req('GET', table, id)
-    }
+	function get(table, id) {
+		return req('GET', table, id);
+	}
 
-    function insert(table, data) {
+	function insert(table, data) {
 		return req('POST', table, data);
 	}
 
@@ -27,9 +27,9 @@ function createRemoteDb(host, port) {
 		return insert(table, data);
 	}
 
-    function query(table, query, join) {
-        return req('PUT', table, query, join)
-    }
+	function query(table, query, join) {
+		return req('POST', table + '/query', { query, join });
+	}
 
     function req(method, table, data) {
         let url = URL + '/' + table;
@@ -63,10 +63,7 @@ function createRemoteDb(host, port) {
 
     return {
         list,
-        get,
-        upsert,
-        query,
-    }    
+    }
 }
 
-module.exports = createRemoteDb;
+module.exports = createRemoteDB;
